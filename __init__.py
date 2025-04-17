@@ -33,6 +33,10 @@ def mongraphique():
 def monhistogramme():
     return render_template("histogramme.html")
 
+def CommitsGithub():
+    return render_template("commits.html")
+
+
 def hello_world():
     return render_template('hello.html')
   
