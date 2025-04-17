@@ -33,6 +33,7 @@ def mongraphique():
 def monhistogramme():
     return render_template("histogramme.html")
 
+@app.route("/commits/")
 def CommitsGithub():
     return render_template("commits.html")
 
