@@ -91,7 +91,7 @@ Difficulté : Moyenne
 ---------------------------------------------------
 Votre solution est à présent en ligne. Rendez-vous sur la page d'accueil de votre site et suivez les instructions pour réaliser les exercices qui vous sont demandés. Bon courage et bon travail à tous.  
 
---------------------------------------------------------------------
+---------------------------------------------------------------------
 Troubleshooting :
 ---------------------------------------------------
 Objectif : Visualiser ses logs et découvrir ses erreurs
