@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <title>Commits GitHub - OpenRSI</title>
+  <style>
+    body { font-family: Arial, sans-serif; background: #f2f2f2; padding: 30px; }
+    h1 { text-align: center; color: #333; }
+    table { width: 80%; margin: auto; border-collapse: collapse; background: white; box-shadow: 0 0 10px rgba(0,0,0,0.1); }
+    th, td { padding: 12px 15px; text-align: left; border-bottom: 1px solid #ddd; }
+    th { background-color: #4CAF50; color: white; }
+    tr:hover { background-color: #f1f1f1; }
+  </style>
+</head>
+<body>
+
+  <h1>Liste des derniers commits</h1>
+  <table>
+    <thead>
+      <tr>
+        <th>Auteur</th>
+        <th>Date</th>
+      </tr>
+    </thead>
+    <tbody id="commit-table-body">
+      <!-- Les données s'affichent ici -->
+    </tbody>
+  </table>
+
+  <script>
+    fetch('https://api.github.com/repos/OpenRSI/5MCSI_Metriques/commits')
+      .then(response => response.json())
+      .then(data => {
+        const tbody = document.getElementById('commit-table-body');
+        data.forEach(commit => {
+          const author = commit.commit.author.name;
+          const date = new Date(commit.commit.author.date).toLocaleString("fr-FR");
+          
+          const row = document.createElement('tr');
+          row.innerHTML = `<td>${author}</td><td>${date}</td>`;
+          tbody.appendChild(row);
+        });
+      })
+      .catch(error => {
+        console.error("Erreur lors du chargement des commits :", error);
+      });
+  </script>
+
+</body>
+</html>
