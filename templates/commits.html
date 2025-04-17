@@ -10,6 +10,7 @@
     th, td { padding: 12px 15px; text-align: left; border-bottom: 1px solid #ddd; }
     th { background-color: #4CAF50; color: white; }
     tr:hover { background-color: #f1f1f1; }
+    .refresh-time { text-align: center; margin-top: 15px; color: #666; font-size: 0.9em; }
   </style>
 </head>
 <body>
@@ -26,24 +27,38 @@
       <!-- Les données s'affichent ici -->
     </tbody>
   </table>
+  <p class="refresh-time" id="last-refresh"></p>
 
   <script>
-    fetch('https://api.github.com/repos/Maleak/5MCSI_Metriques/commits')
-      .then(response => response.json())
-      .then(data => {
-        const tbody = document.getElementById('commit-table-body');
-        data.forEach(commit => {
-          const author = commit.commit.author.name;
-          const date = new Date(commit.commit.author.date).toLocaleString("fr-FR");
-          
-          const row = document.createElement('tr');
-          row.innerHTML = `<td>${author}</td><td>${date}</td>`;
-          tbody.appendChild(row);
+    function loadCommits() {
+      fetch('https://api.github.com/repos/Maleak/5MCSI_Metriques/commits')
+        .then(response => response.json())
+        .then(data => {
+          const tbody = document.getElementById('commit-table-body');
+          tbody.innerHTML = ''; // Vider le tableau avant de recharger
+
+          data.forEach(commit => {
+            const author = commit.commit.author.name;
+            const date = new Date(commit.commit.author.date).toLocaleString("fr-FR");
+            const row = document.createElement('tr');
+            row.innerHTML = `<td>${author}</td><td>${date}</td>`;
+            tbody.appendChild(row);
+          });
+
+          // Mise à jour de l'heure du dernier rafraîchissement
+          const now = new Date().toLocaleTimeString("fr-FR");
+          document.getElementById('last-refresh').innerText = `Dernier rafraîchissement : ${now}`;
+        })
+        .catch(error => {
+          console.error("Erreur lors du chargement des commits :", error);
         });
-      })
-      .catch(error => {
-        console.error("Erreur lors du chargement des commits :", error);
-      });
+    }
+
+    // Appel initial
+    loadCommits();
+
+    // Rafraîchir toutes les 60 secondes (60000 ms)
+    setInterval(loadCommits, 60000);
   </script>
 
 </body>
